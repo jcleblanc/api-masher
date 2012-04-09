@@ -3,7 +3,6 @@ parser = function(){
     var qlioPublicQueryURI = "http://ql.io/q?s=";
     var widgetStack = [];
     var currString, resultFormat, queryInsert;
-    var regex = /\{([\w\-\.\[\]]+)\}/gi;
 	
     /************************************************************
     * Method: Get Data
@@ -17,7 +16,7 @@ parser = function(){
         $.ajax({
             type: 'GET',
             url: sURL,
-            success: function(data){ parseResults(data.results); },
+            success: function(data){ parseResults(data[0]); },
             dataType: 'jsonp'
         });
     }
@@ -34,8 +33,6 @@ parser = function(){
         for(var i = 0; i < results.length; i++){
             html += Mustache.render(resultFormat, results[i]);
         }
-        
-        console.log(html);
 		
         document.getElementById(queryInsert).innerHTML = html;
         parser.render();

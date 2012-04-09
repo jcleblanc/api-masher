@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
 <title>ql.io JavaScript parser</title>
@@ -12,13 +13,13 @@
 <script src="parser.js"></script>
 
 <script type="text/javascript">
-var format = '{{from_user_name}}: {{text}}<br />';
-var query = 'create table twitter.search on select get from "http://search.twitter.com/search.json?q={q}&rpp={rpp}&include_entities={entities}&result_type={result_type}" using defaults rpp="10", entities="true", result_type="mixed"; select * from twitter.search where q = "test";';
-var insertEl = 'widgetContainer';
+var format = "<li><a href='{{link}}' target='_blank'><img src='{{media:content.media:thumbnail.url}}' width='{{media:content.media:thumbnail.width}}' height='{{media:content.media:thumbnail.height}}' /></a><br /><span class='small'><a href='{{link}}' target='_blank'>{{title}}</a></span></li>";
+var query = "create table slideshare on select get from 'http://www.slideshare.net/rss/user/{user}' resultset 'rss.channel'; select item[0], item[1], item[2], item[3], item[4], item[5] from slideshare where user='jcleblanc'";
+var insertEl = "widgetContainer";
 parser.push(query, format, insertEl);
 
 format = '{{from_user_name}}: {{text}}<br />';
-query = 'create table twitter.search on select get from "http://search.twitter.com/search.json?q={q}&rpp={rpp}&include_entities={entities}&result_type={result_type}" using defaults rpp="10", entities="true", result_type="mixed"; select * from twitter.search where q = "jcleblanc";';
+query = 'create table twitter.search on select get from "http://search.twitter.com/search.json?q={q}&rpp={rpp}&include_entities={entities}&result_type={result_type}" using defaults rpp="10", entities="true", result_type="mixed"; select results from twitter.search where q = "jcleblanc";';
 insertEl = 'widgetContainer2';
 parser.push(query, format, insertEl);
 parser.render();
