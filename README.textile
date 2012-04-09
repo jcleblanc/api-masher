@@ -12,9 +12,9 @@ h2. Using API Masher
 To begin using API Masher, simply include script source includes to JQuery, the mustache library, and the parser.
 <notextile>
 <pre>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="mustache.js"></script>
-<script src="parser.js"></script>
+&lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="mustache.js"&gt;&lt;/script&gt;
+&lt;script src="parser.js"&gt;&lt;/script&gt;
 </pre>
 </notextile>
 
