@@ -1,0 +1,84 @@
+h1. API Masher
+
+The API Masher is a JavaScript include that allows you to display web-based API data sets easily.
+
+This project uses:
+   * "ql.io":http://ql.io : A node-based data mashup engine to query that API data sources.
+   * "JQuery":http://jquery.com/ : For making the cross-domain requests via JavaScript to ql.io.
+   * "Mustache Templates":http://mustache.github.com/ : For rendering the formatted content.
+
+h2. Using API Masher
+
+To begin using API Masher, simply include script source includes to JQuery, the mustache library, and the parser.
+<notextile>
+<pre>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="mustache.js"></script>
+<script src="parser.js"></script>
+</pre>
+</notextile>
+
+Now you can begin integrating API data easily into your sites using the format below:
+<notextile>
+<pre>
+<div id="widgetContainer"></div>
+<div id="widgetContainer2"></div>
+
+<script type="text/javascript">
+var format = "<li><a href='{{link}}' target='_blank'><img src='{{media:content.media:thumbnail.url}}' width='{{media:content.media:thumbnail.width}}' height='{{media:content.media:thumbnail.height}}' /></a><br /><span class='small'><a href='{{link}}' target='_blank'>{{title}}</a></span></li>";
+var query = "create table slideshare on select get from 'http://www.slideshare.net/rss/user/{user}' resultset 'rss.channel'; select item[0], item[1], item[2], item[3], item[4], item[5] from slideshare where user='jcleblanc'";
+var insertEl = "widgetContainer";
+parser.push(query, format, insertEl);
+
+format = '{{from_user_name}}: {{text}}<br />';
+query = 'create table twitter.search on select get from "http://search.twitter.com/search.json?q={q}&rpp={rpp}&include_entities={entities}&result_type={result_type}" using defaults rpp="10", entities="true", result_type="mixed"; select results from twitter.search where q = "jcleblanc";';
+insertEl = 'widgetContainer2';
+parser.push(query, format, insertEl);
+parser.render();
+</script>
+</pre>
+</notextile>
+
+The above sample is integrating formatted data from 2 web sources (Slideshare and Twitter) into their associated div nodes.  If we break down a single request, it is composed of the following components:
+
+The HTML node where the web content should be loaded into
+<notextile>
+<pre>
+<div id="widgetContainer"></div>
+</pre>
+</notextile>
+
+The mixed mustache / HTML template laying out how the content should be rendered.  Any node in mustache format {{}} should relate to an associated return object from the API request in ql.io
+<notextile>
+<pre>
+var format = "<li><a href='{{link}}' target='_blank'><img src='{{media:content.media:thumbnail.url}}' width='{{media:content.media:thumbnail.width}}' height='{{media:content.media:thumbnail.height}}' /></a><br /><span class='small'><a href='{{link}}' target='_blank'>{{title}}</a></span></li>";
+</pre>
+</notextile>
+
+The ql.io query to be run and whose results relate back to the format above.
+<notextile>
+<pre>
+var query = "create table slideshare on select get from 'http://www.slideshare.net/rss/user/{user}' resultset 'rss.channel'; select item[0], item[1], item[2], item[3], item[4], item[5] from slideshare where user='jcleblanc'";
+</pre>
+</notextile>
+
+The ID of the HTML element to insert the results into.
+<notextile>
+<pre>
+var insertEl = "widgetContainer";
+</pre>
+</notextile>
+
+The request to push the API call onto the stack, passing in the query, format and insert element.  You can push multiple requests onto the stack before rendering.
+<notextile>
+<pre>
+parser.push(query, format, insertEl);
+</pre>
+</notextile>
+
+The call to render the API content on the page.  This should only be run after all API requests have been pushed onto the stack.
+<notextile>
+<pre>
+parser.render();
+</pre>
+</notextile>
