@@ -21,21 +21,21 @@ To begin using API Masher, simply include script source includes to JQuery, the 
 Now you can begin integrating API data easily into your sites using the format below:
 <notextile>
 <pre>
-<div id="widgetContainer"></div>
-<div id="widgetContainer2"></div>
+&lt;div id="widgetContainer"&gt;&lt;/div&gt;
+&lt;div id="widgetContainer2"&gt;&lt;/div&gt;
 
-<script type="text/javascript">
-var format = "<li><a href='{{link}}' target='_blank'><img src='{{media:content.media:thumbnail.url}}' width='{{media:content.media:thumbnail.width}}' height='{{media:content.media:thumbnail.height}}' /></a><br /><span class='small'><a href='{{link}}' target='_blank'>{{title}}</a></span></li>";
+&lt;script type="text/javascript"&gt;
+var format = "&lt;li&gt;&lt;a href='{{link}}' target='_blank'&gt;&lt;img src='{{media:content.media:thumbnail.url}}' width='{{media:content.media:thumbnail.width}}' height='{{media:content.media:thumbnail.height}}' /&gt;&lt;/a&gt;&lt;br /&gt;&lt;span class='small'&gt;&lt;a href='{{link}}' target='_blank'&gt;{{title}}&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;";
 var query = "create table slideshare on select get from 'http://www.slideshare.net/rss/user/{user}' resultset 'rss.channel'; select item[0], item[1], item[2], item[3], item[4], item[5] from slideshare where user='jcleblanc'";
 var insertEl = "widgetContainer";
 parser.push(query, format, insertEl);
 
-format = '{{from_user_name}}: {{text}}<br />';
+format = '{{from_user_name}}: {{text}}&lt;br /&gt;';
 query = 'create table twitter.search on select get from "http://search.twitter.com/search.json?q={q}&rpp={rpp}&include_entities={entities}&result_type={result_type}" using defaults rpp="10", entities="true", result_type="mixed"; select results from twitter.search where q = "jcleblanc";';
 insertEl = 'widgetContainer2';
 parser.push(query, format, insertEl);
 parser.render();
-</script>
+&lt;/script&gt;
 </pre>
 </notextile>
 
@@ -44,14 +44,14 @@ The above sample is integrating formatted data from 2 web sources (Slideshare an
 The HTML node where the web content should be loaded into
 <notextile>
 <pre>
-<div id="widgetContainer"></div>
+&lt;div id="widgetContainer"&gt;&lt;/div&gt;
 </pre>
 </notextile>
 
 The mixed mustache / HTML template laying out how the content should be rendered.  Any node in mustache format {{}} should relate to an associated return object from the API request in ql.io
 <notextile>
 <pre>
-var format = "<li><a href='{{link}}' target='_blank'><img src='{{media:content.media:thumbnail.url}}' width='{{media:content.media:thumbnail.width}}' height='{{media:content.media:thumbnail.height}}' /></a><br /><span class='small'><a href='{{link}}' target='_blank'>{{title}}</a></span></li>";
+var format = "&lt;li&gt;&lt;a href='{{link}}' target='_blank'&gt;&lt;img src='{{media:content.media:thumbnail.url}}' width='{{media:content.media:thumbnail.width}}' height='{{media:content.media:thumbnail.height}}' /&gt;&lt;/a&gt;&lt;br /&gt;&lt;span class='small'&gt;&lt;a href='{{link}}' target='_blank'&gt;{{title}}&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;";
 </pre>
 </notextile>
 
